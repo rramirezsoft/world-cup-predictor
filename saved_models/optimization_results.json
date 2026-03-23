@@ -1,0 +1,71 @@
+{
+  "best_model_name": "XGBoost (Optuna)",
+  "n_trials_per_model": 50,
+  "xgboost": {
+    "best_params": {
+      "n_estimators": 363,
+      "max_depth": 6,
+      "learning_rate": 0.014214047667870789,
+      "subsample": 0.7614966374585719,
+      "colsample_bytree": 0.7666830943871809,
+      "min_child_weight": 8,
+      "reg_alpha": 9.989265666536445,
+      "reg_lambda": 0.0020117384377773767,
+      "gamma": 4.999766002270698,
+      "random_state": 42,
+      "verbosity": 0,
+      "eval_metric": "mlogloss"
+    },
+    "best_val_logloss": 0.9003169497799135,
+    "val_accuracy": 0.5977900552486188,
+    "val_logloss": 0.9003169497799135
+  },
+  "lightgbm": {
+    "best_params": {
+      "n_estimators": 155,
+      "max_depth": 7,
+      "learning_rate": 0.01259029505460445,
+      "subsample": 0.7799586329972777,
+      "colsample_bytree": 0.7420550086001705,
+      "min_child_samples": 9,
+      "reg_alpha": 0.15367299194893413,
+      "reg_lambda": 0.021239048819949088,
+      "num_leaves": 63,
+      "class_weight": "balanced",
+      "random_state": 42,
+      "verbosity": -1
+    },
+    "best_val_logloss": 0.9554190487229933,
+    "val_accuracy": 0.523756906077348,
+    "val_logloss": 0.9554190487229933
+  },
+  "stacking_ensemble": {
+    "val_accuracy": 0.5889502762430939,
+    "val_logloss": 0.903812567771098
+  },
+  "test_evaluation": {
+    "accuracy": 0.6070887609815208,
+    "log_loss": 0.8602193295921147
+  },
+  "wc2022_evaluation": {
+    "accuracy": 0.53125,
+    "log_loss": 1.0577604963980378
+  },
+  "model_comparison_val": [
+    {
+      "name": "XGBoost (Optuna)",
+      "val_accuracy": 0.5977900552486188,
+      "val_logloss": 0.9003169497799135
+    },
+    {
+      "name": "Stacking Ensemble",
+      "val_accuracy": 0.5889502762430939,
+      "val_logloss": 0.903812567771098
+    },
+    {
+      "name": "LightGBM (Optuna)",
+      "val_accuracy": 0.523756906077348,
+      "val_logloss": 0.9554190487229933
+    }
+  ]
+}

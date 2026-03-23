@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<b:Sources xmlns:b="http://schemas.openxmlformats.org/officeDocument/2006/bibliography" xmlns="http://schemas.openxmlformats.org/officeDocument/2006/bibliography" SelectedStyle="\APASixthEditionOfficeOnline.xsl" StyleName="APA" Version="6">
+  <b:Source>
+    <b:Tag>Cad</b:Tag>
+    <b:SourceType>Book</b:SourceType>
+    <b:Guid>{BB510AEE-DAE2-4857-BDE7-0A7FC6DC3C7C}</b:Guid>
+    <b:Author>
+      <b:Author>
+        <b:NameList>
+          <b:Person>
+            <b:Last>Cadenas</b:Last>
+          </b:Person>
+        </b:NameList>
+      </b:Author>
+    </b:Author>
+    <b:Year>1986</b:Year>
+    <b:RefOrder>1</b:RefOrder>
+  </b:Source>
+</b:Sources>

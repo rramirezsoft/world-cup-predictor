@@ -1,0 +1,57 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+dist/
+*.egg-info/
+*.egg
+
+# Jupyter
+.ipynb_checkpoints/
+*/.ipynb_checkpoints/
+
+# Environments
+.env
+.env.*
+.venv/
+venv/
+
+# Claude Code
+.claude/
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Modelos entrenados (archivos grandes, se regeneran con scripts/)
+saved_models/*.joblib
+saved_models/*.pkl
+
+# Outputs generados (se regeneran con scripts/)
+outputs/*.png
+
+# Frontend build
+frontend/node_modules/
+frontend/.next/
+frontend/out/
+node_modules/
+
+# Logs
+*.log
+
+# Documentos del TFG (se mantienen fuera del repo)
+*.docx
+*.pdf
+CONTEXTO_TFG.md
+unpacked-plantilla/
