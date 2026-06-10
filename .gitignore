@@ -52,6 +52,7 @@ node_modules/
 
 # Documentos del TFG (se mantienen fuera del repo)
 *.docx
+~$*
 *.pdf
 CONTEXTO_TFG.md
-unpacked-plantilla/
+docs/

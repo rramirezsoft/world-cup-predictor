@@ -3,20 +3,16 @@ Entrenamiento, evaluacion y comparacion de modelos.
 """
 
 import numpy as np
-import pandas as pd
 import joblib
 from sklearn.dummy import DummyClassifier
 from sklearn.linear_model import LogisticRegression
 from sklearn.ensemble import RandomForestClassifier, StackingClassifier
 from sklearn.calibration import CalibratedClassifierCV
-from sklearn.metrics import (
-    accuracy_score, log_loss, classification_report,
-    confusion_matrix, brier_score_loss,
-)
+from sklearn.metrics import accuracy_score, log_loss, classification_report, confusion_matrix
 import xgboost as xgb
 import lightgbm as lgb
 
-from model.config import RANDOM_SEED, MODELS_DIR, FEATURE_COLS
+from model.config import RANDOM_SEED, MODELS_DIR
 
 
 TARGET_NAMES = ["Victoria Visitante", "Empate", "Victoria Local"]

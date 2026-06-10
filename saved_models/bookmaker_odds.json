@@ -1,0 +1,26 @@
+{
+  "source": "Promedio de Polymarket, DraftKings, FanDuel y bet365 (junio 2025)",
+  "note": "Probabilidades implicitas de odds de casas de apuestas para el ganador del Mundial 2026",
+  "teams": [
+    {"team": "Spain", "champion_pct": 16.0},
+    {"team": "France", "champion_pct": 14.0},
+    {"team": "England", "champion_pct": 12.0},
+    {"team": "Argentina", "champion_pct": 10.0},
+    {"team": "Brazil", "champion_pct": 10.0},
+    {"team": "Germany", "champion_pct": 7.0},
+    {"team": "Netherlands", "champion_pct": 4.0},
+    {"team": "Portugal", "champion_pct": 4.0},
+    {"team": "Uruguay", "champion_pct": 2.5},
+    {"team": "Colombia", "champion_pct": 2.5},
+    {"team": "Belgium", "champion_pct": 2.0},
+    {"team": "Croatia", "champion_pct": 1.5},
+    {"team": "Japan", "champion_pct": 1.5},
+    {"team": "United States", "champion_pct": 1.5},
+    {"team": "Mexico", "champion_pct": 1.0},
+    {"team": "Ecuador", "champion_pct": 1.0},
+    {"team": "Senegal", "champion_pct": 0.8},
+    {"team": "Morocco", "champion_pct": 0.8},
+    {"team": "Turkey", "champion_pct": 0.5},
+    {"team": "Switzerland", "champion_pct": 0.5}
+  ]
+}

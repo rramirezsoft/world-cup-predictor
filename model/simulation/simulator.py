@@ -9,6 +9,7 @@ from collections import defaultdict
 from model.config import (
     WORLD_CUP_2026_GROUPS, FEATURE_COLS, RANDOM_SEED,
     MONTE_CARLO_SIMULATIONS, TEAM_TO_CONFEDERATION,
+    FIFA_RANKINGS, FIFA_RANK_DEFAULT,
 )
 from model.features.elo import get_tournament_weight
 from model.simulation.tournament import (
@@ -86,6 +87,9 @@ class WorldCupSimulator:
             is_knockout,
             self.major_exp.get(home_team, 0), self.major_exp.get(away_team, 0),
             self.form.get_home_record(home_team), self.form.get_away_record(away_team),
+            FIFA_RANKINGS.get(home_team, FIFA_RANK_DEFAULT),
+            FIFA_RANKINGS.get(away_team, FIFA_RANK_DEFAULT),
+            FIFA_RANKINGS.get(home_team, FIFA_RANK_DEFAULT) - FIFA_RANKINGS.get(away_team, FIFA_RANK_DEFAULT),
         ], dtype=np.float64).reshape(1, -1)
 
         if self.scaler is not None:

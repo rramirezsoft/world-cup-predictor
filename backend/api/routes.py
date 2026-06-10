@@ -2,11 +2,13 @@
 Endpoints de la API del World Cup 2026 Predictor.
 """
 
+import json
 from fastapi import APIRouter, HTTPException, Query
 from pydantic import BaseModel
 from typing import Optional
 
 from backend.services.predictor import predictor
+from model.config import MODELS_DIR
 
 router = APIRouter(prefix="/api")
 
@@ -69,6 +71,16 @@ def get_stats():
     if not results:
         raise HTTPException(
             404,
-            "No hay datos de estadisticas. Ejecuta: venv\\Scripts\\python scripts/run_monte_carlo.py",
+            "No hay datos de estadisticas. Ejecuta: venv\\Scripts\\python scripts/optimize_model.py",
         )
     return results
+
+
+@router.get("/bookmaker-odds")
+def get_bookmaker_odds():
+    """Odds de casas de apuestas para comparar con nuestro modelo."""
+    odds_path = MODELS_DIR / "bookmaker_odds.json"
+    if not odds_path.exists():
+        raise HTTPException(404, "No hay datos de casas de apuestas")
+    with open(odds_path, "r", encoding="utf-8") as f:
+        return json.load(f)

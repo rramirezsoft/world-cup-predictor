@@ -5,7 +5,7 @@ Sistema de rating ELO adaptado para futbol internacional.
 import numpy as np
 from collections import defaultdict
 from model.config import (
-    ELO_K, ELO_INITIAL, ELO_HOME_ADV,
+    ELO_K, ELO_INITIAL, ELO_HOME_ADV, ELO_MEAN_REVERSION,
     TOURNAMENT_WEIGHTS, TOURNAMENT_WEIGHT_DEFAULT,
 )
 
@@ -18,10 +18,12 @@ def get_tournament_weight(tournament):
 class ELOSystem:
     """Sistema ELO adaptado para futbol internacional."""
 
-    def __init__(self, k=ELO_K, initial=ELO_INITIAL, home_adv=ELO_HOME_ADV):
+    def __init__(self, k=ELO_K, initial=ELO_INITIAL, home_adv=ELO_HOME_ADV,
+                 mean_reversion=ELO_MEAN_REVERSION):
         self.k = k
         self.initial = initial
         self.home_adv = home_adv
+        self.mean_reversion = mean_reversion
         self.ratings = {}
 
     def __getstate__(self):
@@ -82,8 +84,13 @@ class ELOSystem:
         delta_home = self.k * weight * goal_mult * (actual_home - exp_home)
         delta_away = self.k * weight * goal_mult * (actual_away - exp_away)
 
-        self.ratings[home_team] = ra + delta_home
-        self.ratings[away_team] = rb + delta_away
+        new_home = ra + delta_home
+        new_away = rb + delta_away
+
+        # Regresion a la media: evita que los ratings se disparen
+        mr = self.mean_reversion
+        self.ratings[home_team] = new_home * (1 - mr) + self.initial * mr
+        self.ratings[away_team] = new_away * (1 - mr) + self.initial * mr
 
         return self.ratings[home_team], self.ratings[away_team]
 

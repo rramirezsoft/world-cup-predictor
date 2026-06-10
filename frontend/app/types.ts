@@ -97,6 +97,9 @@ export const COUNTRY_CODES: Record<string, string> = {
   "Greece": "gr",
   "Slovakia": "sk",
   "Albania": "al",
+  "Bosnia and Herzegovina": "ba",
+  "Curaçao": "cw",
+  "Curacao": "cw",
   // CONMEBOL (6)
   "Argentina": "ar",
   "Brazil": "br",

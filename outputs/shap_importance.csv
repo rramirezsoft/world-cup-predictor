@@ -1,0 +1,51 @@
+feature,display_name,mean_abs_shap
+elo_expected_home,Prob. esperada ELO,0.08793410166793032
+elo_diff,Diferencia ELO,0.019402003228004713
+away_conf_strength,Fortaleza conf. visitante,0.009931715213387126
+fifa_rank_diff,Dif. ranking FIFA,0.008114404306937164
+away_major_tournament_exp,Experiencia torneos (V),0.006702853901622195
+away_form_gc,Goles contra recientes (V),0.004653612519424254
+h2h_home_goals,H2H goles local,0.0033574955163562345
+tournament_weight,Peso del torneo,0.003337833794214143
+home_major_tournament_exp,Experiencia torneos (L),0.002935573765647131
+home_form_gc,Goles contra recientes (L),0.0029011486278419994
+form_gd_diff,Dif. gol diferencia,0.0026974988954102937
+away_elo,ELO visitante,0.0026223249455642264
+h2h_away_goals,H2H goles visitante,0.002171453168503164
+h2h_draws,H2H empates,0.001949871392625694
+neutral_int,Campo neutral,0.0019229294827673585
+away_form_gd,Dif. goles recientes (V),0.0018933181891101411
+away_fifa_rank,Ranking FIFA visitante,0.0018414500036820147
+h2h_home_wins,H2H victorias local,0.0018345578153307243
+home_form_gf,Goles favor recientes (L),0.0017384294656765033
+home_conf_strength,Fortaleza conf. local,0.0013051741230495585
+home_elo,ELO local,0.0008230900560078832
+home_form_gd,Dif. goles recientes (L),0.0008138410578404249
+h2h_dominance,H2H dominancia,0.0007171796614498213
+h2h_away_wins,H2H victorias visitante,0.0006800854584240974
+home_unbeaten_streak,Invicto local,0.0006362331146180319
+form_points_diff,Dif. puntos forma,0.0005929875050710205
+home_fifa_rank,Ranking FIFA local,0.0005760583315743134
+away_unbeaten_streak,Invicto visitante,0.0005569851012473609
+away_form_points,Puntos recientes (V),0.00039793766219324117
+is_knockout,Fase eliminatoria,0.0003805069506090754
+home_form_draws,Empates recientes (L),0.00036773383215380173
+away_days_rest,Descanso visitante,0.0003311949778076574
+home_home_record,Rendimiento como local,0.0003219905700922639
+away_clean_sheet_pct,Porteria a cero (V),0.0003090445879536368
+is_competitive,Partido competitivo,0.000281575414542264
+away_form_gf,Goles favor recientes (V),0.0002774690703605299
+form_gf_diff,Dif. goles favor,0.00025765100868108343
+home_days_rest,Descanso local,0.0002398177689562239
+away_away_record,Rendimiento como visitante,0.0002258393536244207
+away_form_losses,Derrotas recientes (V),0.00020640952465279602
+is_inter_confederation,Inter-confederacion,0.00017621844613846969
+away_streak,Racha visitante,0.0001686693785712122
+home_streak,Racha local,0.00013672623507057647
+rest_advantage,Ventaja descanso,0.0001355805877014066
+away_form_draws,Empates recientes (V),0.00013073251823273805
+home_clean_sheet_pct,Porteria a cero (L),0.00012906161468708883
+away_form_wins,Victorias recientes (V),0.00011999056250012189
+home_form_losses,Derrotas recientes (L),0.00011707289509940916
+home_form_points,Puntos recientes (L),8.163049034774365e-05
+home_form_wins,Victorias recientes (L),7.53601368749515e-05

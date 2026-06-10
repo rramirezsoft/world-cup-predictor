@@ -16,9 +16,10 @@ OUTPUTS_DIR = ROOT_DIR / "outputs"
 RANDOM_SEED = 42
 
 # --- ELO ---
-ELO_K = 40
+ELO_K = 32              # Factor K reducido para suavizar cambios de rating
 ELO_INITIAL = 1500
 ELO_HOME_ADV = 100
+ELO_MEAN_REVERSION = 0.003  # Ligera regresion a la media tras cada partido
 
 TOURNAMENT_WEIGHTS = {
     "FIFA World Cup": 1.5,
@@ -177,24 +178,27 @@ FEATURE_COLS = [
     "home_major_tournament_exp", "away_major_tournament_exp",
     # Rendimiento local/visitante especifico
     "home_home_record", "away_away_record",
+    # Ranking FIFA
+    "home_fifa_rank", "away_fifa_rank", "fifa_rank_diff",
 ]
 
 TARGET = "result"
 
 # --- Grupos Mundial 2026 ---
 # Los nombres deben coincidir EXACTAMENTE con los de results.csv
+# Grupos definitivos tras la resolucion de todas las repescas (marzo 2026)
 WORLD_CUP_2026_GROUPS = {
-    "A": ["Mexico", "South Africa", "South Korea", "Denmark"],         # Denmark = favorito repesca UEFA D
-    "B": ["Canada", "Italy", "Qatar", "Switzerland"],                  # Italy = favorito repesca UEFA A
+    "A": ["Mexico", "South Africa", "South Korea", "Czech Republic"],
+    "B": ["Canada", "Bosnia and Herzegovina", "Qatar", "Switzerland"],
     "C": ["Brazil", "Morocco", "Haiti", "Scotland"],
-    "D": ["United States", "Paraguay", "Australia", "Turkey"],         # Turkey = favorito repesca UEFA C
+    "D": ["United States", "Paraguay", "Australia", "Turkey"],
     "E": ["Germany", "Curaçao", "Ivory Coast", "Ecuador"],
-    "F": ["Netherlands", "Japan", "Poland", "Tunisia"],                # Poland = favorito repesca UEFA B
+    "F": ["Netherlands", "Japan", "Sweden", "Tunisia"],
     "G": ["Belgium", "Egypt", "Iran", "New Zealand"],
     "H": ["Spain", "Cape Verde", "Saudi Arabia", "Uruguay"],
-    "I": ["France", "Senegal", "Iraq", "Norway"],                     # Iraq = favorito repesca intercont. 2
+    "I": ["France", "Senegal", "Iraq", "Norway"],
     "J": ["Argentina", "Algeria", "Austria", "Jordan"],
-    "K": ["Portugal", "DR Congo", "Uzbekistan", "Colombia"],          # DR Congo = favorito repesca intercont. 1
+    "K": ["Portugal", "Jamaica", "Uzbekistan", "Colombia"],
     "L": ["England", "Croatia", "Ghana", "Panama"],
 }
 
@@ -207,3 +211,22 @@ CV_N_SPLITS = 5
 
 # --- Simulacion ---
 MONTE_CARLO_SIMULATIONS = 10_000
+
+# --- Ranking FIFA (abril 2026, fuente: football-ranking.com) ---
+# Usado como feature estatica. Equipos no listados reciben rank 100 (por defecto).
+FIFA_RANKINGS = {
+    "France": 1, "Spain": 2, "Argentina": 3, "England": 4, "Portugal": 5,
+    "Brazil": 6, "Netherlands": 7, "Morocco": 8, "Belgium": 9, "Germany": 10,
+    "Croatia": 11, "Colombia": 12, "Senegal": 13, "Italy": 14, "Mexico": 15,
+    "United States": 16, "Uruguay": 17, "Japan": 18, "Switzerland": 19,
+    "Iran": 20, "Denmark": 21, "Turkey": 22, "Ecuador": 23, "Austria": 24,
+    "South Korea": 25, "Nigeria": 26, "Australia": 27, "Algeria": 28,
+    "Egypt": 29, "Canada": 30, "Norway": 31, "Ukraine": 32, "Panama": 33,
+    "Ivory Coast": 34, "Poland": 35, "Sweden": 37, "Czech Republic": 38,
+    "Paraguay": 41, "Scotland": 43, "Tunisia": 44, "Uzbekistan": 49,
+    "Qatar": 55, "Iraq": 57, "South Africa": 60, "Saudi Arabia": 61,
+    "Jordan": 63, "Bosnia and Herzegovina": 65, "Cape Verde": 69,
+    "Ghana": 74, "Haiti": 83, "New Zealand": 85, "Jamaica": 87,
+    "Curaçao": 95,
+}
+FIFA_RANK_DEFAULT = 100

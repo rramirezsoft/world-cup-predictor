@@ -10,6 +10,7 @@ from collections import defaultdict
 from model.config import (
     TEAM_TO_CONFEDERATION, MAJOR_TOURNAMENTS, KNOCKOUT_TOURNAMENTS,
     FEATURE_COLS, TARGET, TRAIN_START_YEAR,
+    FIFA_RANKINGS, FIFA_RANK_DEFAULT,
 )
 from model.features.elo import ELOSystem, get_tournament_weight
 from model.features.form import FormTracker
@@ -146,6 +147,13 @@ def build_features(df):
         # 12. Rendimiento local/visitante especifico
         features["home_home_record"][i] = form.get_home_record(home)
         features["away_away_record"][i] = form.get_away_record(away)
+
+        # 13. Ranking FIFA (feature estatica)
+        home_rank = FIFA_RANKINGS.get(home, FIFA_RANK_DEFAULT)
+        away_rank = FIFA_RANKINGS.get(away, FIFA_RANK_DEFAULT)
+        features["home_fifa_rank"][i] = home_rank
+        features["away_fifa_rank"][i] = away_rank
+        features["fifa_rank_diff"][i] = home_rank - away_rank
 
         # ---- ACTUALIZAR TRACKERS (despues del partido) ----
 

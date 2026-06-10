@@ -9,28 +9,27 @@ interface StatsViewProps {
   nSimulations: number;
 }
 
-// Odds reales de casas de apuestas (marzo 2026, fuentes: bet365, Betfair, William Hill)
-// Convertidas de cuotas decimales a probabilidad implícita
+// Probabilidades de casas de apuestas (junio 2026)
+// Fuentes: Polymarket, bet365, Betfair
 const BOOKMAKER_ODDS: Record<string, number> = {
-  Argentina: 14.0,
-  Spain: 12.0,
-  France: 11.0,
-  England: 10.0,
+  Spain: 16.0,
+  France: 14.0,
+  England: 12.0,
+  Argentina: 10.0,
   Brazil: 8.0,
   Germany: 6.5,
   Portugal: 5.5,
   Netherlands: 4.0,
   Colombia: 2.5,
   Belgium: 2.0,
-  Italy: 2.0,
   Uruguay: 1.8,
-  USA: 1.5,
-  Denmark: 1.2,
+  "United States": 1.5,
   Croatia: 1.0,
-  Mexico: 0.8,
   Japan: 0.8,
-  "Korea Republic": 0.5,
+  Morocco: 1.0,
+  Mexico: 0.8,
   Switzerland: 0.5,
+  Senegal: 0.5,
   Ecuador: 0.4,
 };
 
@@ -78,15 +77,15 @@ function DualBar({ ours, theirs, maxVal, delay }: { ours: number; theirs: number
   const theirsW = maxVal > 0 ? (theirs / maxVal) * 100 : 0;
   return (
     <div className="space-y-1">
-      <div className="flex items-center gap-2">
-        <span className="text-[9px] text-[#e94560] w-14 text-right font-semibold">{ours.toFixed(1)}%</span>
-        <div className="flex-1 h-3.5 bg-white/[0.03] rounded overflow-hidden">
+      <div className="flex items-center gap-1.5 sm:gap-2">
+        <span className="text-[9px] text-[#e94560] w-10 sm:w-14 text-right font-semibold">{ours.toFixed(1)}%</span>
+        <div className="flex-1 h-3 sm:h-3.5 bg-white/[0.03] rounded overflow-hidden">
           <motion.div initial={{ width: 0 }} animate={{ width: `${oursW}%` }} transition={{ duration: 0.8, delay, ease: "easeOut" }} className="h-full rounded bg-[#e94560]/70" />
         </div>
       </div>
-      <div className="flex items-center gap-2">
-        <span className="text-[9px] text-blue-400 w-14 text-right font-semibold">{theirs.toFixed(1)}%</span>
-        <div className="flex-1 h-3.5 bg-white/[0.03] rounded overflow-hidden">
+      <div className="flex items-center gap-1.5 sm:gap-2">
+        <span className="text-[9px] text-blue-400 w-10 sm:w-14 text-right font-semibold">{theirs.toFixed(1)}%</span>
+        <div className="flex-1 h-3 sm:h-3.5 bg-white/[0.03] rounded overflow-hidden">
           <motion.div initial={{ width: 0 }} animate={{ width: `${theirsW}%` }} transition={{ duration: 0.8, delay: delay + 0.1, ease: "easeOut" }} className="h-full rounded bg-blue-500/50" />
         </div>
       </div>
@@ -130,33 +129,32 @@ export default function StatsView({ data, nSimulations }: StatsViewProps) {
       <div>
         <h2 className="text-xl font-bold flex items-center gap-2">
           <span className="w-1.5 h-1.5 rounded-full bg-[#e94560]" />
-          Estadisticas del Modelo
+          Probabilidades del Mundial 2026
         </h2>
         <p className="text-gray-600 text-sm mt-1.5 max-w-3xl leading-relaxed">
           Probabilidades calculadas a partir de {nSimulations.toLocaleString()} simulaciones
-          completas del Mundial 2026. Modelo XGBoost con 47 features, entrenado sobre
-          49,000+ partidos historicos.
+          completas del torneo, desde la fase de grupos hasta la final.
         </p>
       </div>
 
       {/* Summary cards */}
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-3">
         {[
-          { label: "Simulaciones", value: nSimulations.toLocaleString(), sub: "Monte Carlo" },
-          { label: "Partidos/sim", value: "104", sub: "72 grupos + 32 elim." },
+          { label: "Simulaciones", value: nSimulations.toLocaleString(), sub: "Escenarios analizados" },
+          { label: "Partidos", value: "104", sub: "Por cada simulacion" },
           { label: "Selecciones", value: "48", sub: "12 grupos de 4" },
-          { label: "Features", value: "47", sub: "ELO, forma, H2H..." },
+          { label: "Variables", value: "50", sub: "Datos de rendimiento" },
         ].map((card) => (
-          <div key={card.label} className="bg-[#141b2d] rounded-xl border border-white/[0.06] p-4">
+          <div key={card.label} className="bg-[#141b2d] rounded-xl border border-white/[0.06] p-3 sm:p-4">
             <p className="text-[10px] text-gray-600 uppercase tracking-wider">{card.label}</p>
-            <p className="text-2xl font-black text-white mt-1">{card.value}</p>
+            <p className="text-xl sm:text-2xl font-black text-white mt-1">{card.value}</p>
             <p className="text-[10px] text-gray-500 mt-0.5">{card.sub}</p>
           </div>
         ))}
       </div>
 
       {/* Top 3 podium */}
-      <div className="grid grid-cols-3 gap-4 max-w-3xl mx-auto">
+      <div className="grid grid-cols-3 gap-2 sm:gap-4 max-w-3xl mx-auto">
         {top3.map((team, idx) => {
           const borders = ["border-yellow-500/40 shadow-yellow-500/10", "border-gray-400/30 shadow-gray-400/10", "border-amber-600/30 shadow-amber-600/10"];
           const gradients = ["from-yellow-500/10 to-yellow-600/5", "from-gray-400/10 to-gray-500/5", "from-amber-600/10 to-amber-700/5"];
@@ -167,17 +165,17 @@ export default function StatsView({ data, nSimulations }: StatsViewProps) {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: idx * 0.15, duration: 0.5 }}
-              className={`bg-gradient-to-b ${gradients[idx]} border ${borders[idx]} rounded-xl p-5 text-center shadow-lg`}
+              className={`bg-gradient-to-b ${gradients[idx]} border ${borders[idx]} rounded-xl p-3 sm:p-5 text-center shadow-lg`}
               style={{ order: idx === 0 ? 1 : idx === 1 ? 0 : 2 }}
             >
-              <p className="text-[10px] uppercase tracking-widest text-gray-500 mb-3">{labels[idx]}</p>
-              <div className="flex justify-center mb-3"><Flag team={team.team} size={48} /></div>
-              <p className="font-bold text-base text-white">{team.team}</p>
-              <p className="text-[#e94560] font-black text-3xl mt-1">{team.champion_pct.toFixed(1)}%</p>
-              <div className="mt-3 space-y-1 text-[10px] text-gray-500">
+              <p className="text-[9px] sm:text-[10px] uppercase tracking-widest text-gray-500 mb-2 sm:mb-3">{labels[idx]}</p>
+              <div className="flex justify-center mb-2 sm:mb-3"><Flag team={team.team} size={48} /></div>
+              <p className="font-bold text-xs sm:text-base text-white truncate">{team.team}</p>
+              <p className="text-[#e94560] font-black text-xl sm:text-3xl mt-1">{team.champion_pct.toFixed(1)}%</p>
+              <div className="mt-2 sm:mt-3 space-y-1 text-[9px] sm:text-[10px] text-gray-500">
                 <p>Final: <span className="text-gray-300 font-medium">{team.final_pct.toFixed(1)}%</span></p>
-                <p>Semifinal: <span className="text-gray-300 font-medium">{team.sf_pct.toFixed(1)}%</span></p>
-                <p>ELO: <span className="text-gray-300 font-medium">{team.elo.toFixed(0)}</span></p>
+                <p className="hidden sm:block">Semifinal: <span className="text-gray-300 font-medium">{team.sf_pct.toFixed(1)}%</span></p>
+                <p className="hidden sm:block">ELO: <span className="text-gray-300 font-medium">{team.elo.toFixed(0)}</span></p>
               </div>
             </motion.div>
           );
@@ -186,10 +184,10 @@ export default function StatsView({ data, nSimulations }: StatsViewProps) {
 
       {/* ===== COMPARISON WITH BOOKMAKERS ===== */}
       <div className="bg-[#141b2d] rounded-xl border border-white/[0.06] overflow-hidden">
-        <div className="bg-[#0f1629] border-b border-white/[0.06] px-5 py-4">
-          <h3 className="font-bold text-sm text-white">Nuestro Modelo vs. Casas de Apuestas</h3>
-          <p className="text-[10px] text-gray-500 mt-1">
-            Comparacion de probabilidades de campeon — Fuentes: bet365, Betfair, William Hill (marzo 2026)
+        <div className="bg-[#0f1629] border-b border-white/[0.06] px-3 sm:px-5 py-3 sm:py-4">
+          <h3 className="font-bold text-xs sm:text-sm text-white">Nuestro Modelo vs. Casas de Apuestas</h3>
+          <p className="text-[10px] text-gray-500 mt-1 leading-relaxed">
+            Comparacion de probabilidades de campeon — Fuentes: Polymarket, bet365, Betfair (junio 2026)
           </p>
           <div className="flex gap-4 mt-2">
             <span className="flex items-center gap-1.5 text-[10px]">
@@ -202,18 +200,18 @@ export default function StatsView({ data, nSimulations }: StatsViewProps) {
             </span>
           </div>
         </div>
-        <div className="p-4 space-y-3">
+        <div className="p-3 sm:p-4 space-y-2.5 sm:space-y-3">
           {comparisonTeams.map((team, idx) => (
             <motion.div
               key={team.team}
               initial={{ opacity: 0, x: -12 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: idx * 0.03, duration: 0.3 }}
-              className="flex items-center gap-3"
+              className="flex items-center gap-2 sm:gap-3"
             >
-              <div className="flex items-center gap-2 w-36 shrink-0">
+              <div className="flex items-center gap-1.5 sm:gap-2 w-24 sm:w-36 shrink-0">
                 <Flag team={team.team} size={20} />
-                <span className="text-xs font-medium text-gray-300 truncate">{team.team}</span>
+                <span className="text-[11px] sm:text-xs font-medium text-gray-300 truncate">{team.team}</span>
               </div>
               <div className="flex-1">
                 <DualBar
@@ -229,7 +227,7 @@ export default function StatsView({ data, nSimulations }: StatsViewProps) {
       </div>
 
       {/* ===== CONFEDERATION BREAKDOWN ===== */}
-      <div className="grid grid-cols-2 lg:grid-cols-3 gap-3">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
         {Object.entries(confStats)
           .sort(([, a], [, b]) => b.champPct - a.champPct)
           .map(([conf, stats]) => {
@@ -268,12 +266,12 @@ export default function StatsView({ data, nSimulations }: StatsViewProps) {
         </h3>
         <div className="bg-[#141b2d] rounded-xl border border-white/[0.06] overflow-hidden">
           <div className="bg-[#0f1629] border-b border-white/[0.06]">
-            <div className="grid grid-cols-[3rem_1fr_7rem_7rem_7rem_5rem] gap-2 px-4 py-3 text-[10px] font-bold uppercase tracking-wider text-gray-500">
+            <div className="grid grid-cols-[2.5rem_1fr_5rem_3.5rem] sm:grid-cols-[3rem_1fr_7rem_7rem_7rem_5rem] gap-1 sm:gap-2 px-3 sm:px-4 py-3 text-[10px] font-bold uppercase tracking-wider text-gray-500">
               <div className="text-center">#</div>
               <div>Seleccion</div>
               <div className="text-center">Campeon</div>
-              <div className="text-center">Final</div>
-              <div className="text-center">Semifinal</div>
+              <div className="text-center hidden sm:block">Final</div>
+              <div className="text-center hidden sm:block">Semifinal</div>
               <div className="text-center">ELO</div>
             </div>
           </div>
@@ -284,25 +282,25 @@ export default function StatsView({ data, nSimulations }: StatsViewProps) {
                 initial={{ opacity: 0, x: -16 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: idx * 0.015, duration: 0.3 }}
-                className={`grid grid-cols-[3rem_1fr_7rem_7rem_7rem_5rem] gap-2 px-4 py-2 items-center border-b border-white/[0.02] table-row-hover ${idx < 3 ? "bg-white/[0.02]" : ""}`}
+                className={`grid grid-cols-[2.5rem_1fr_5rem_3.5rem] sm:grid-cols-[3rem_1fr_7rem_7rem_7rem_5rem] gap-1 sm:gap-2 px-3 sm:px-4 py-2 items-center border-b border-white/[0.02] table-row-hover ${idx < 3 ? "bg-white/[0.02]" : ""}`}
               >
                 <div className="flex justify-center"><MedalBadge rank={idx + 1} /></div>
-                <div className="flex items-center gap-2.5">
+                <div className="flex items-center gap-1.5 sm:gap-2.5 min-w-0">
                   <Flag team={team.team} size={24} />
-                  <span className={`text-sm truncate ${idx < 3 ? "font-bold text-white" : idx < 8 ? "font-medium text-gray-200" : "text-gray-400"}`}>
+                  <span className={`text-xs sm:text-sm truncate ${idx < 3 ? "font-bold text-white" : idx < 8 ? "font-medium text-gray-200" : "text-gray-400"}`}>
                     {team.team}
                   </span>
                 </div>
                 <div>
                   <PctBar pct={team.champion_pct} maxPct={maxChampion} color={idx < 3 ? "rgba(233,69,96,0.7)" : idx < 8 ? "rgba(233,69,96,0.45)" : "rgba(233,69,96,0.2)"} delay={idx * 0.015} />
                 </div>
-                <div>
+                <div className="hidden sm:block">
                   <PctBar pct={team.final_pct} maxPct={maxFinal} color={idx < 3 ? "rgba(59,130,246,0.6)" : "rgba(59,130,246,0.25)"} delay={idx * 0.015 + 0.1} />
                 </div>
-                <div>
+                <div className="hidden sm:block">
                   <PctBar pct={team.sf_pct} maxPct={maxSf} color={idx < 3 ? "rgba(34,197,94,0.5)" : "rgba(34,197,94,0.2)"} delay={idx * 0.015 + 0.2} />
                 </div>
-                <div className="text-center text-xs font-mono text-gray-500">{team.elo.toFixed(0)}</div>
+                <div className="text-center text-[11px] sm:text-xs font-mono text-gray-500">{team.elo.toFixed(0)}</div>
               </motion.div>
             ))}
           </div>
@@ -310,10 +308,10 @@ export default function StatsView({ data, nSimulations }: StatsViewProps) {
       </div>
 
       {/* Legend */}
-      <div className="flex flex-wrap gap-6 justify-center text-[10px] text-gray-600">
+      <div className="flex flex-wrap gap-4 sm:gap-6 justify-center text-[10px] text-gray-600">
         <span className="flex items-center gap-1.5"><span className="w-3 h-2 rounded-sm bg-[#e94560]/60" /> % Campeon</span>
-        <span className="flex items-center gap-1.5"><span className="w-3 h-2 rounded-sm bg-blue-500/50" /> % Finalista</span>
-        <span className="flex items-center gap-1.5"><span className="w-3 h-2 rounded-sm bg-emerald-500/40" /> % Semifinalista</span>
+        <span className="hidden sm:flex items-center gap-1.5"><span className="w-3 h-2 rounded-sm bg-blue-500/50" /> % Finalista</span>
+        <span className="hidden sm:flex items-center gap-1.5"><span className="w-3 h-2 rounded-sm bg-emerald-500/40" /> % Semifinalista</span>
       </div>
     </div>
   );

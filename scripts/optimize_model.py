@@ -232,7 +232,32 @@ candidates = [
 candidates.sort(key=lambda x: x[3])  # sort by log_loss ascending (lower is better)
 best_name, best_model, best_val_acc, best_val_ll = candidates[0]
 
-print(f"\n      >>> Mejor modelo: {best_name}")
+print(f"\n      >>> Mejor modelo (sin calibrar): {best_name}")
+print(f"          Val Accuracy: {best_val_acc:.4f} | Val LogLoss: {best_val_ll:.4f}")
+
+# Calibrar probabilidades (suaviza predicciones extremas)
+print("\n      Calibrando probabilidades (isotonic)...")
+from sklearn.calibration import CalibratedClassifierCV
+calibrated = CalibratedClassifierCV(best_model, method="isotonic", cv=5)
+calibrated.fit(X_train, y_train, sample_weight=sample_weights)
+
+cal_val_pred = calibrated.predict(X_val)
+cal_val_proba = calibrated.predict_proba(X_val)
+cal_val_acc = accuracy_score(y_val, cal_val_pred)
+cal_val_ll = log_loss(y_val, cal_val_proba)
+print(f"      Calibrado — Val Acc: {cal_val_acc:.4f} | Val LogLoss: {cal_val_ll:.4f}")
+
+# Usar el calibrado si mejora log_loss, si no usar el original
+if cal_val_ll < best_val_ll:
+    best_model = calibrated
+    best_name = f"{best_name} + Calibrated"
+    best_val_acc = cal_val_acc
+    best_val_ll = cal_val_ll
+    print(f"      >>> Calibracion mejora el modelo. Usando version calibrada.")
+else:
+    print(f"      >>> Calibracion no mejora. Manteniendo modelo original.")
+
+print(f"\n      >>> Mejor modelo final: {best_name}")
 print(f"          Val Accuracy: {best_val_acc:.4f} | Val LogLoss: {best_val_ll:.4f}")
 
 

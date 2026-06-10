@@ -43,8 +43,8 @@ function MatchCard({
       transition={{ duration: 0.3 }}
       className={`bg-[#141b2d] rounded-lg border overflow-hidden ${
         isFinal
-          ? "border-yellow-500/30 shadow-lg shadow-yellow-500/5 min-w-[260px]"
-          : "border-white/[0.06] hover:border-white/[0.12] min-w-[210px]"
+          ? "border-yellow-500/30 shadow-lg shadow-yellow-500/5 min-w-[200px] sm:min-w-[260px]"
+          : "border-white/[0.06] hover:border-white/[0.12] min-w-[180px] sm:min-w-[210px]"
       } transition-colors`}
     >
       <TeamRow

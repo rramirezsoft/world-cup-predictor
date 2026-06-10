@@ -34,15 +34,6 @@ export default function Home() {
   const [visibleGroups, setVisibleGroups] = useState(0);
   const [error, setError] = useState<string | null>(null);
   const [showConfetti, setShowConfetti] = useState(false);
-  const [backendOk, setBackendOk] = useState<boolean | null>(null);
-
-  // Health check
-  useEffect(() => {
-    fetch(`${API_BASE}/health`)
-      .then((r) => r.json())
-      .then((d) => setBackendOk(d.status === "ok"))
-      .catch(() => setBackendOk(false));
-  }, []);
 
   // Progressive group reveal
   useEffect(() => {
@@ -136,50 +127,48 @@ export default function Home() {
               WC
             </div>
             <div>
-              <h1 className="text-lg font-black tracking-tight">
-                World Cup 2026 <span className="text-[#e94560]">Predictor</span>
+              <h1 className="text-sm sm:text-lg font-black tracking-tight">
+                <span className="hidden sm:inline">World Cup 2026 </span>
+                <span className="sm:hidden">WC 2026 </span>
+                <span className="text-[#e94560]">Predictor</span>
               </h1>
-              <p className="text-[9px] text-gray-600 uppercase tracking-[0.2em]">
-                Machine Learning &middot; 49,000+ partidos historicos
+              <p className="text-[9px] text-gray-600 uppercase tracking-[0.2em] hidden sm:block">
+                USA &middot; Mexico &middot; Canada 2026
               </p>
             </div>
           </div>
 
-          <div className="flex gap-2 items-center">
-            {backendOk !== null && (
-              <div
-                className={`w-2 h-2 rounded-full ${backendOk ? "bg-emerald-500" : "bg-red-500"}`}
-                title={backendOk ? "Backend conectado" : "Backend desconectado"}
-              />
-            )}
+          <div className="flex gap-1.5 sm:gap-2 items-center flex-wrap justify-end">
             {isSimulating && (
-              <button onClick={skipToEnd} className="text-[11px] text-gray-500 hover:text-white px-3 py-1.5 rounded-lg border border-white/[0.06] hover:border-white/[0.12] transition-all">
-                Saltar al final
+              <button onClick={skipToEnd} className="text-[10px] sm:text-[11px] text-gray-500 hover:text-white px-2 sm:px-3 py-1.5 rounded-lg border border-white/[0.06] hover:border-white/[0.12] transition-all">
+                Saltar
               </button>
             )}
             <button
               onClick={runSimulation}
               disabled={phase === "loading"}
-              className="bg-[#e94560] hover:bg-[#d13a54] disabled:opacity-50 text-white px-4 py-2 rounded-lg font-semibold text-xs transition-all hover:scale-[1.02] active:scale-[0.98] shadow-lg shadow-[#e94560]/15"
+              className="bg-[#e94560] hover:bg-[#d13a54] disabled:opacity-50 text-white px-3 sm:px-4 py-1.5 sm:py-2 rounded-lg font-semibold text-[11px] sm:text-xs transition-all hover:scale-[1.02] active:scale-[0.98] shadow-lg shadow-[#e94560]/15"
             >
               {phase === "loading" ? (
                 <span className="flex items-center gap-2">
                   <span className="inline-block w-3 h-3 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                  Simulando...
+                  <span className="hidden sm:inline">Simulando...</span>
+                  <span className="sm:hidden">...</span>
                 </span>
-              ) : "Simular Mundial"}
+              ) : <><span className="hidden sm:inline">Simular Mundial</span><span className="sm:hidden">Simular</span></>}
             </button>
             <button
               onClick={loadStats}
               disabled={phase === "stats-loading"}
-              className="bg-white/[0.04] hover:bg-white/[0.08] disabled:opacity-50 text-white px-4 py-2 rounded-lg font-semibold text-xs border border-white/[0.06] hover:border-white/[0.12] transition-all hover:scale-[1.02] active:scale-[0.98]"
+              className="bg-white/[0.04] hover:bg-white/[0.08] disabled:opacity-50 text-white px-3 sm:px-4 py-1.5 sm:py-2 rounded-lg font-semibold text-[11px] sm:text-xs border border-white/[0.06] hover:border-white/[0.12] transition-all hover:scale-[1.02] active:scale-[0.98]"
             >
               {phase === "stats-loading" ? (
                 <span className="flex items-center gap-2">
                   <span className="inline-block w-3 h-3 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                  Cargando...
+                  <span className="hidden sm:inline">Cargando...</span>
+                  <span className="sm:hidden">...</span>
                 </span>
-              ) : "Estadisticas"}
+              ) : <><span className="hidden sm:inline">Estadisticas</span><span className="sm:hidden">Stats</span></>}
             </button>
           </div>
         </div>
@@ -229,7 +218,7 @@ export default function Home() {
 
         {/* ===== IDLE ===== */}
         {phase === "idle" && !simulation && !statsData && (
-          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.6 }} className="text-center py-16">
+          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.6 }} className="text-center py-10 sm:py-16">
             <motion.div animate={{ y: [0, -8, 0] }} transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }} className="mb-8">
               <div className="inline-flex items-center justify-center w-24 h-24 rounded-3xl bg-gradient-to-br from-[#e94560]/20 to-[#e94560]/5 border border-[#e94560]/10">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" className="w-12 h-12 text-[#e94560]" strokeWidth={1.5}>
@@ -243,33 +232,32 @@ export default function Home() {
               </div>
             </motion.div>
 
-            <h2 className="text-4xl sm:text-5xl font-black mb-4 tracking-tight">
+            <h2 className="text-3xl sm:text-5xl font-black mb-4 tracking-tight">
               FIFA World Cup <span className="text-[#e94560]">2026</span>
             </h2>
-            <p className="text-gray-400 max-w-2xl mx-auto mb-3 text-lg leading-relaxed">
-              Prediccion basada en un modelo de Machine Learning entrenado con{" "}
-              <span className="text-white font-semibold">49,000+ partidos internacionales</span>.
+            <p className="text-gray-400 max-w-2xl mx-auto mb-3 text-base sm:text-lg leading-relaxed px-2">
+              Descubre quien tiene mas probabilidades de ganar el proximo Mundial
+              y simula el torneo completo.
             </p>
-            <p className="text-gray-600 max-w-xl mx-auto mb-10 text-sm leading-relaxed">
-              Ratings ELO, forma reciente, historial directo y 47 features
-              alimentan un modelo XGBoost optimizado para predecir cada partido
-              del primer Mundial con 48 selecciones.
+            <p className="text-gray-600 max-w-xl mx-auto mb-8 sm:mb-10 text-sm leading-relaxed px-2">
+              48 selecciones. 12 grupos. 104 partidos. El primer Mundial
+              con este formato — y nosotros lo predecimos.
             </p>
 
             <div className="flex gap-4 justify-center flex-wrap">
-              <button onClick={runSimulation} className="bg-gradient-to-r from-[#e94560] to-[#c73e54] hover:from-[#d13a54] hover:to-[#b03548] text-white px-10 py-4 rounded-xl font-bold text-base transition-all hover:scale-[1.03] active:scale-[0.98] shadow-xl shadow-[#e94560]/20">
+              <button onClick={runSimulation} className="bg-gradient-to-r from-[#e94560] to-[#c73e54] hover:from-[#d13a54] hover:to-[#b03548] text-white px-8 sm:px-10 py-3 sm:py-4 rounded-xl font-bold text-sm sm:text-base transition-all hover:scale-[1.03] active:scale-[0.98] shadow-xl shadow-[#e94560]/20">
                 Simular el Mundial
               </button>
-              <button onClick={loadStats} className="bg-white/[0.04] hover:bg-white/[0.08] text-white px-10 py-4 rounded-xl font-bold text-base border border-white/[0.08] hover:border-white/[0.15] transition-all hover:scale-[1.03] active:scale-[0.98]">
+              <button onClick={loadStats} className="bg-white/[0.04] hover:bg-white/[0.08] text-white px-8 sm:px-10 py-3 sm:py-4 rounded-xl font-bold text-sm sm:text-base border border-white/[0.08] hover:border-white/[0.15] transition-all hover:scale-[1.03] active:scale-[0.98]">
                 Estadisticas
               </button>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-16 max-w-3xl mx-auto">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4 mt-10 sm:mt-16 max-w-3xl mx-auto px-2 sm:px-0">
               {[
-                { title: "47 Features", desc: "ELO, forma, H2H, rachas, confederacion y mas" },
-                { title: "XGBoost Optimizado", desc: "Gradient boosting con hiperparametros optimizados via Optuna" },
-                { title: "10,000 Simulaciones", desc: "Probabilidades reales calculadas sobre miles de escenarios" },
+                { title: "48 Selecciones", desc: "Todas las clasificadas para USA, Mexico y Canada 2026" },
+                { title: "12 Grupos", desc: "Fase de grupos completa con los 104 partidos del torneo" },
+                { title: "10,000 Escenarios", desc: "Probabilidades basadas en miles de simulaciones del torneo" },
               ].map((f) => (
                 <div key={f.title} className="bg-white/[0.02] rounded-xl p-5 border border-white/[0.04] hover:border-white/[0.08] transition-colors">
                   <h3 className="font-bold text-sm text-white">{f.title}</h3>
@@ -277,13 +265,6 @@ export default function Home() {
                 </div>
               ))}
             </div>
-
-            {backendOk === false && (
-              <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="mt-8 inline-flex items-center gap-2 bg-red-500/[0.08] border border-red-500/15 rounded-lg px-4 py-2 text-xs text-red-400">
-                <div className="w-2 h-2 rounded-full bg-red-500" />
-                Backend no detectado — ejecuta el servidor en el puerto 8001
-              </motion.div>
-            )}
           </motion.div>
         )}
 
@@ -308,10 +289,10 @@ export default function Home() {
                   <span className="w-2 h-2 rounded-full bg-[#e94560] animate-pulse" />
                   <span className="text-[#e94560] font-bold text-sm">{PHASE_LABELS[phase] || phase}</span>
                 </div>
-                <div className="flex gap-1.5 justify-center mt-4">
+                <div className="flex gap-1 sm:gap-1.5 justify-center mt-4">
                   {SIMULATION_PHASES.map((p) => (
                     <div key={p} className={`h-1 rounded-full transition-all duration-500 ${
-                      SIMULATION_PHASES.indexOf(phase) >= SIMULATION_PHASES.indexOf(p) ? "bg-[#e94560] w-10" : "bg-white/[0.06] w-8"
+                      SIMULATION_PHASES.indexOf(phase) >= SIMULATION_PHASES.indexOf(p) ? "bg-[#e94560] w-6 sm:w-10" : "bg-white/[0.06] w-5 sm:w-8"
                     }`} />
                   ))}
                 </div>
@@ -353,10 +334,10 @@ export default function Home() {
             {phase === "champion" && (
               <section className="mt-10">
                 <motion.div initial={{ opacity: 0, scale: 0.85 }} animate={{ opacity: 1, scale: 1 }} transition={{ type: "spring", bounce: 0.35, duration: 0.8 }} className="text-center mb-10">
-                  <div className="inline-block bg-gradient-to-b from-yellow-500/20 via-yellow-600/10 to-transparent border border-yellow-500/20 rounded-2xl px-12 py-8 champion-glow">
-                    <p className="text-[10px] text-yellow-500/70 font-bold uppercase tracking-[0.3em] mb-4">Campeon del Mundo 2026</p>
-                    <div className="flex justify-center mb-4"><Flag team={simulation.champion} size={80} /></div>
-                    <p className="text-3xl sm:text-4xl font-black text-white mb-2">{simulation.champion}</p>
+                  <div className="inline-block bg-gradient-to-b from-yellow-500/20 via-yellow-600/10 to-transparent border border-yellow-500/20 rounded-2xl px-6 sm:px-12 py-6 sm:py-8 champion-glow max-w-[90vw]">
+                    <p className="text-[9px] sm:text-[10px] text-yellow-500/70 font-bold uppercase tracking-[0.2em] sm:tracking-[0.3em] mb-3 sm:mb-4">Campeon del Mundo 2026</p>
+                    <div className="flex justify-center mb-3 sm:mb-4"><Flag team={simulation.champion} size={80} /></div>
+                    <p className="text-2xl sm:text-4xl font-black text-white mb-2">{simulation.champion}</p>
                     <div className="flex items-center justify-center gap-2 mt-3 text-sm text-gray-500">
                       <span>Subcampeon:</span>
                       <Flag team={simulation.runner_up} size={20} />
@@ -384,11 +365,8 @@ export default function Home() {
       </div>
 
       {/* Footer */}
-      <footer className="border-t border-white/[0.04] mt-16 py-8 text-center">
-        <p className="text-xs text-gray-700">World Cup 2026 Predictor &mdash; TFG Ingenieria del Software</p>
-        <p className="text-[10px] text-gray-800 mt-1.5 tracking-wide">
-          XGBoost &middot; 47 features &middot; 49,000+ partidos historicos &middot; 10,000 simulaciones
-        </p>
+      <footer className="border-t border-white/[0.04] mt-16 py-6 text-center">
+        <p className="text-[11px] text-gray-700">World Cup 2026 Predictor</p>
       </footer>
     </main>
   );
